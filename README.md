@@ -26,7 +26,7 @@ npm run preview   # serve the build locally
 
 - `src/config.ts`: site settings, contact details and the client-name switch.
 - `src/data/clients.ts`: clients, with both a real name and a generic description.
-- `src/data/projects.ts`: case studies (need, what I built, outcome, tags).
+- `src/data/projects.ts`: case studies (need, what we built, outcome, tags).
 - `src/styles/global.css`: design tokens for light and dark mode, mapped into Tailwind.
 - `src/components/`: Header, Footer, ThemeToggle, Logo, ApiCard, CaseRow, CtaBand and smaller pieces.
 - `public/images/`: logos (navy and white) and the contact QR code.
