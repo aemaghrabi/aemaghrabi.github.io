@@ -149,3 +149,8 @@
     @apply mt-[9px] size-2 flex-none rounded-full border-2 border-accent;
   }
 }
+
+/* Dark mode: cards on the lighter alternate bands drop to the page tone so they stand out. */
+.dark .bg-surface-alt .card {
+  background-color: var(--surface);
+}
