@@ -186,7 +186,7 @@ export const projects: Record<string, Project> = {
     "id": "scada",
     "client": "iotech",
     "title": "Intellija SCADA frontend MVP",
-    "stat": "TypeScript",
+    "stat": "",
     "statLabel": "Angular frontend on PrimeNG",
     "need": "IoTech’s SCADA platform needed its first operator interface.",
     "built": "An Angular and TypeScript frontend on a customised PrimeNG library, an ISA 18.2 alarm UI on ag-grid, Gridstack dashboards with Chart.js and Highcharts charts, and Protobuf decoders for live MQTT data.",
