@@ -35,10 +35,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap"
     />
 
-    <!-- Apply the saved colour mode before first paint. Light is the default. -->
+    <!-- Apply the saved colour mode before first paint. Falls back to the browser preference. -->
     <script is:inline>
       try {
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+        var saved = localStorage.getItem('theme');
+        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
   </head>
@@ -71,6 +73,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           });
         });
         sync();
+        // Follow browser changes until the visitor picks a mode manually.
+        try {
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+            if (localStorage.getItem('theme')) return;
+            root.classList.toggle('dark', e.matches);
+            sync();
+          });
+        } catch (e) {}
       })();
     </script>
   </body>
