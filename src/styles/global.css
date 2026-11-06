@@ -121,7 +121,7 @@
     @apply flex min-w-0 flex-col gap-3 rounded-card border border-line bg-card p-[22px] md:p-7;
   }
   .pill {
-    @apply inline-block rounded-pill bg-surface-alt px-3.5 py-1.5 text-sm leading-[1.4] text-ink;
+    @apply inline-block rounded-pill bg-surface-alt px-3.5 py-1.5 text-sm dark:bg-line leading-[1.4] text-ink;
   }
   .btn {
     @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-pill px-6 text-base leading-[1.2] font-bold no-underline;
