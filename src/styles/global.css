@@ -120,6 +120,10 @@
   .card {
     @apply flex min-w-0 flex-col gap-3 rounded-card border border-line bg-card p-[22px] md:p-7;
   }
+  /* Dark mode: cards inside surface-alt sections drop to the page tone so they stand out. */
+  .dark .bg-surface-alt .card {
+    background-color: var(--surface);
+  }
   .pill {
     @apply inline-block rounded-pill bg-surface-alt dark:bg-line px-3.5 py-1.5 text-sm leading-[1.4] text-ink;
   }
