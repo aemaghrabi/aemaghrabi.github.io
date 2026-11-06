@@ -1,0 +1,33 @@
+---
+// Mock API response card. Night fill in light mode, brand navy in dark mode.
+interface Props {
+  role: string;
+  stack: string[];
+  focus: string;
+}
+const { role, stack, focus } = Astro.props;
+---
+
+<div class="min-w-0 self-center overflow-x-auto rounded-card bg-api p-7 font-mono text-[15px] leading-[1.7] text-paper">
+  <div class="mb-3.5 flex flex-wrap justify-between gap-3 border-b border-api-line pb-3.5">
+    <span><span class="font-bold text-teal-bright">GET</span> /api/ahmed</span>
+    <span class="text-api-dim">200 OK · 4 ms</span>
+  </div>
+  <div>{'{'}</div>
+  <div class="pl-5">"role": <span class="text-teal-bright">"{role}"</span>,</div>
+  <div class="pl-5">
+    "stack": [{
+      stack.map((s, i) => (
+        <>
+          <span class="text-teal-bright">"{s}"</span>
+          {i < stack.length - 1 ? ', ' : ''}
+        </>
+      ))
+    }],
+  </div>
+  <div class="pl-5">"focus": <span class="text-teal-bright">"{focus}"</span>,</div>
+  <div class="pl-5">"writing_csharp_since": <span class="text-amber-bright">2011</span>,</div>
+  <div class="pl-5">"production_azure_since": <span class="text-amber-bright">2020</span>,</div>
+  <div class="pl-5">"available": <span class="text-teal-bright">"part-time, freelance"</span></div>
+  <div>{'}'}</div>
+</div>

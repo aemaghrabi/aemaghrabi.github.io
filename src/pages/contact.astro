@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { CONTACT, SITE } from '../config';
+
+const prompts = [
+  'In a few lines, what’s the business problem you’re trying to solve?',
+  'Where does it break or cost you time today?',
+  'What would a good result look like?',
+];
+
+const links: { icon: IconName; label: string; value: string; href: string }[] = [
+  { icon: 'mail', label: 'Work email', value: CONTACT.workEmail, href: `mailto:${CONTACT.workEmail}` },
+  { icon: 'mail', label: 'IEEE email', value: CONTACT.ieeeEmail, href: `mailto:${CONTACT.ieeeEmail}` },
+  { icon: 'link', label: 'LinkedIn', value: 'linkedin.com/in/a-elmaghrabi', href: CONTACT.linkedin },
+  { icon: 'code', label: 'GitHub', value: 'github.com/aemaghrabi', href: CONTACT.github },
+];
+---
+
+<BaseLayout title="Contact" description="Tell me what the business needs. No form, just a short email.">
+  <PageHeader
+    eyebrow="Contact"
+    title="Tell me what the business needs"
+    lead="No form, just a short email. These three answers are enough for me to reply with a first proposal."
+  />
+
+  <section class="section pt-0 md:pt-0">
+    <div class="wrap grid items-start gap-6 lg:grid-cols-2">
+      <div class="flex flex-col gap-4">
+        <div class="card gap-4 border-brand-navy bg-brand-navy text-paper md:p-8">
+          <p class="eyebrow text-teal-bright">In your first email</p>
+          <ul class="dot-list">
+            {prompts.map((p) => <li class="text-paper before:border-teal-bright">{p}</li>)}
+          </ul>
+        </div>
+
+        {
+          links.map((l) => (
+            <a class="card flex-row items-start gap-4 text-ink no-underline hover:border-accent hover:text-ink" href={l.href}>
+              <span class="flex size-12 flex-none items-center justify-center rounded-xl bg-surface-alt text-accent">
+                <Icon name={l.icon} />
+              </span>
+              <span class="flex flex-col gap-1">
+                <span class="kicker text-soft">{l.label}</span>
+                <span class="text-lg font-bold break-words">{l.value}</span>
+              </span>
+            </a>
+          ))
+        }
+
+        <div class="card flex-row items-start gap-4">
+          <span class="flex size-12 flex-none items-center justify-center rounded-xl bg-surface-alt text-accent">
+            <Icon name="phone" />
+          </span>
+          <span class="flex flex-col gap-1">
+            <span class="kicker text-soft">Phone / WhatsApp</span>
+            {
+              CONTACT.phone ? (
+                <a class="text-lg font-bold text-ink no-underline" href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>
+                  {CONTACT.phone}
+                </a>
+              ) : (
+                <span class="font-mono font-medium text-amber">[BUSINESS PHONE / WHATSAPP]</span>
+              )
+            }
+          </span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="card items-start gap-4">
+          <p class="eyebrow">Save my contact</p>
+          <img class="block w-44 dark:hidden" src="/images/contact-qr-transparent.png" alt="QR code with Ahmed El-Maghrabi’s contact details" width="267" height="300" />
+          <img class="hidden w-[200px] rounded-xl bg-white p-3 dark:block" src="/images/contact-qr.png" alt="QR code with Ahmed El-Maghrabi’s contact details" width="307" height="340" />
+          <p class="m-0 text-soft">Scan to save my contact details to your phone.</p>
+        </div>
+
+        <div class="card gap-5">
+          <div class="flex flex-wrap items-center gap-3">
+            <Icon name="pin" class="text-accent" />
+            <span><strong>{SITE.location}</strong> <span class="text-soft">· UTC+2, working remotely</span></span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <Icon name="clock" class="text-accent" />
+            <strong>Open to part-time and freelance work</strong>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <Icon name="chat" class="text-accent" />
+            <span><strong>Arabic</strong> <span class="text-soft">native</span> · <strong>English</strong> <span class="text-soft">professional working</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

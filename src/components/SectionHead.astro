@@ -1,0 +1,27 @@
+---
+// Eyebrow + heading block, with an optional "more" link on the right.
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  moreHref?: string;
+  moreLabel?: string;
+}
+const { eyebrow, title, moreHref, moreLabel } = Astro.props;
+---
+
+<div class="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-12">
+  <div class="flex flex-col gap-4">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="h2">{title}</h2>
+  </div>
+  {
+    moreHref && (
+      <a class="inline-flex min-h-11 items-center gap-2 font-bold no-underline" href={moreHref}>
+        {moreLabel}
+        <Icon name="arrow" size={20} />
+      </a>
+    )
+  }
+</div>

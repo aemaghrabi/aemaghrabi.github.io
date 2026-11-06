@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ApiCard from '../components/ApiCard.astro';
+import CaseRow from '../components/CaseRow.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { projects } from '../data/projects';
+import { clientName } from '../lib/clientName';
+import type { ClientKey } from '../data/clients';
+
+const steps = [
+  ['01', 'Understand the workflow', 'I learn where the business loses time or money: a manual check, a missed payout, a field reading that never arrives.'],
+  ['02', 'Design the right service', 'I pick the smallest thing that fixes it: an API, an integration, a serverless function or a device.'],
+  ['03', 'Build across the stack', 'Cloud services, webhooks, gateways, firmware interfaces and PCBs. I don’t stop at a layer boundary.'],
+  ['04', 'Run it in production', 'Deployments, monitoring and uptime, so the fix keeps working after launch.'],
+];
+
+const layers: [IconName, string, string][] = [
+  ['cloud', 'Cloud and APIs', '.NET, Azure Functions, Data Factory, Node.js, Quarkus, Spring'],
+  ['link', 'Integrations', 'Stripe, Branch, Symplr, Jobrobotix, webhooks'],
+  ['layers', 'Gateways and protocols', 'MQTT, Sparkplug B, Modbus, Zigbee, HTTP, gRPC, GraphQL, WebSockets and more'],
+  ['cpu', 'Hardware and RF', 'Hardware design, multi-layer PCB layout, antennas, 4–20 mA'],
+];
+
+const featured = [projects.pay, projects.wtx, projects.jobs];
+const trusted: ClientKey[] = ['findfill', 'nfta', 'iotech', 'search'];
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="section pt-10 md:pt-16">
+    <div class="wrap grid items-stretch gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div class="flex flex-col justify-center gap-6">
+        <p class="eyebrow">Engineer · software to silicon</p>
+        <h1 class="h1">I turn business needs into products that work, from the cloud API down to the hardware.</h1>
+        <p class="lead">
+          I’ve written software since 2011 and hold a B.Eng. in Electrical, Electronics and Communications Engineering. I
+          start from the workflow that hurts, then build the service, integration or device around it.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn btn-primary w-full sm:w-auto" href="/projects/">See case studies <Icon name="arrow" size={20} /></a>
+          <a class="btn btn-secondary w-full sm:w-auto" href="/contact/">Get in touch</a>
+        </div>
+      </div>
+      <ApiCard
+        role="Engineer, software to silicon"
+        stack={['.NET', 'Azure', 'Node.js', 'MQTT', 'Modbus', 'PCB design']}
+        focus="business need to working product"
+      />
+    </div>
+  </section>
+
+  <!-- How I work -->
+  <section class="section bg-surface-alt">
+    <div class="wrap">
+      <SectionHead eyebrow="How I work" title="From a business need to a working product" />
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          steps.map(([n, t, d]) => (
+            <div class="card">
+              <span class="font-mono text-[32px] font-medium text-accent">{n}</span>
+              <h3 class="h3">{t}</h3>
+              <p class="m-0 text-soft">{d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Range -->
+  <section class="section">
+    <div class="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+      <div class="flex flex-col gap-4">
+        <p class="eyebrow">Range</p>
+        <h2 class="h2">One engineer across four layers</h2>
+        <p class="m-0 text-soft">
+          Most product problems sit between two layers. I can follow a bug from the API down to the board, or a business
+          rule from the spreadsheet into a service.
+        </p>
+      </div>
+      <div class="grid gap-4">
+        {
+          layers.map(([icon, t, d]) => (
+            <div class="card flex-row items-center gap-4">
+              <Icon name={icon} size={32} class="flex-none text-accent" />
+              <div class="flex min-w-0 flex-col gap-0.5">
+                <span class="font-bold">{t}</span>
+                <span class="text-[15px] text-soft">{d}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Case studies -->
+  <section class="section bg-surface-alt">
+    <div class="wrap">
+      <SectionHead eyebrow="Case studies" title="Needs I’ve turned into products" moreHref="/projects/" moreLabel="All case studies" />
+      <div class="flex flex-col gap-6">
+        {featured.map((p, i) => <CaseRow project={p} index={i + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted by -->
+  <section class="py-16">
+    <div class="wrap grid items-center gap-6 md:grid-cols-[minmax(0,0.5fr)_minmax(0,1.5fr)]">
+      <p class="eyebrow">Trusted by</p>
+      <div class="flex flex-wrap gap-3">
+        {trusted.map((k) => <span class="pill px-[18px] py-2.5 text-base">{clientName(k)}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="What does your business need built?"
+    text="I’m open to part-time and freelance work. Bring the problem; I’ll propose the product."
+    button="Tell me about it"
+  />
+</BaseLayout>

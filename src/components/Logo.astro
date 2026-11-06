@@ -1,0 +1,11 @@
+---
+// El-Maghrabi logo: navy file in light mode, white file in dark mode (per the design system's logo rules).
+interface Props {
+  class?: string;
+  alt?: string;
+}
+const { class: className = 'h-[60px] md:h-[88px]', alt = 'El-Maghrabi' } = Astro.props;
+---
+
+<img class:list={[className, 'block w-auto dark:hidden']} src="/images/logo-horizontal.png" alt={alt} width="1280" height="474" />
+<img class:list={[className, 'hidden w-auto dark:block']} src="/images/logo-horizontal-white.png" alt={alt} width="1280" height="474" />

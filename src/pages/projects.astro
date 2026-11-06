@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseRow from '../components/CaseRow.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { projects } from '../data/projects';
+
+const groups = [
+  { id: 'ops', eyebrow: 'Operations and payments', title: 'Removing manual work from daily operations', keys: ['oig', 'pay', 'bg', 'hook'] },
+  { id: 'data', eyebrow: 'Data and integrations', title: 'Keeping systems in sync', keys: ['geo', 'jobs', 'vms', 'azure'] },
+  { id: 'field', eyebrow: 'Field and industrial', title: 'Getting data out of the field', keys: ['wtx', 'zig', 'inst', 'node', 'scada'] },
+];
+
+// Case numbers run on across the groups (01, 02, ...).
+let counter = 0;
+const numbered = groups.map((g) => ({
+  ...g,
+  items: g.keys.map((k) => ({ project: projects[k], index: ++counter })),
+}));
+---
+
+<BaseLayout title="Case studies" description="The need, what I built, and what changed, sorted by the kind of problem.">
+  <PageHeader
+    eyebrow="Case studies"
+    title="Each one starts with a business need"
+    lead="The need, what I built, and what changed. Sorted by the kind of problem, not the technology."
+  >
+    <nav class="flex flex-wrap gap-2" aria-label="Case study groups">
+      {
+        groups.map((g) => (
+          <a
+            href={`#${g.id}`}
+            class="inline-flex min-h-11 items-center rounded-pill border border-line bg-card px-[18px] text-[15px] text-ink no-underline hover:border-accent hover:text-ink"
+          >
+            {g.eyebrow}
+          </a>
+        ))
+      }
+    </nav>
+  </PageHeader>
+
+  {
+    numbered.map((g, i) => (
+      <section id={g.id} class:list={['section scroll-mt-6', i % 2 === 0 && 'bg-surface-alt']}>
+        <div class="wrap">
+          <SectionHead eyebrow={g.eyebrow} title={g.title} />
+          <div class="flex flex-col gap-6">
+            {g.items.map(({ project, index }) => (
+              <CaseRow project={project} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <div class="h-14 md:h-24"></div>
+  <CtaBand
+    title="Have a need that isn’t on this list yet?"
+    text="Most of these started as a single sentence from a client. Send me yours."
+    button="Tell me about it"
+  />
+</BaseLayout>

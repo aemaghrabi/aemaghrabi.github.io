@@ -1,0 +1,43 @@
+---
+// One case study: the need, what I built, the outcome.
+import type { Project } from '../data/projects';
+import { projectSource } from '../lib/clientName';
+import Pills from './Pills.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project: p, index } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+<article
+  class="card grid gap-x-8 gap-y-6 md:p-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]"
+>
+  <div class="flex flex-col gap-2.5">
+    <span class="font-mono text-sm text-soft">{num} · {projectSource(p.client, p.source)}</span>
+    <h3 class="h3">{p.title}</h3>
+    {
+      p.stat && (
+        <div class="flex flex-col gap-1.5">
+          <span class="font-mono text-4xl leading-[1.1] font-medium text-accent md:text-[40px]">{p.stat}</span>
+          <span class="text-base text-soft">{p.statLabel}</span>
+        </div>
+      )
+    }
+  </div>
+  <div class="flex flex-col gap-2">
+    <span class="kicker text-amber">The need</span>
+    <p class="m-0 text-soft">{p.need}</p>
+  </div>
+  <div class="flex flex-col gap-2">
+    <span class="kicker text-soft">What I built</span>
+    <p class="m-0 text-soft">{p.built}</p>
+  </div>
+  <div class="flex flex-col gap-2">
+    <span class="kicker text-accent">The outcome</span>
+    <p class="m-0 text-ink">{p.outcome}</p>
+    <Pills items={p.tags} />
+  </div>
+</article>

@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  text: string;
+  button?: string;
+  href?: string;
+}
+const { title, text, button = 'Get in touch', href = '/contact/' } = Astro.props;
+---
+
+<section class="section pt-0 md:pt-0">
+  <div class="wrap">
+    <div
+      class="flex flex-wrap items-center justify-between gap-x-12 gap-y-6 rounded-card bg-teal-deep px-6 py-8 text-paper md:p-14"
+    >
+      <div class="flex max-w-[680px] flex-col gap-3">
+        <h2 class="h2 text-paper">{title}</h2>
+        <p class="m-0 text-[19px] text-teal-mist">{text}</p>
+      </div>
+      <a class="btn btn-paper w-full md:w-auto" href={href}>{button} <Icon name="arrow" size={20} /></a>
+    </div>
+  </div>
+</section>

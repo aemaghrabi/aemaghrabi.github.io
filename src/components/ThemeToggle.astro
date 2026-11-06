@@ -1,0 +1,22 @@
+---
+// Light / Dark pill switch. The script in BaseLayout wires up every instance.
+---
+
+<div
+  class="inline-flex gap-0.5 rounded-pill border border-line bg-surface-alt p-[3px]"
+  role="group"
+  aria-label="Colour mode"
+>
+  {
+    (['light', 'dark'] as const).map((mode) => (
+      <button
+        type="button"
+        data-theme-set={mode}
+        aria-pressed={mode === 'light' ? 'true' : 'false'}
+        class="inline-flex min-h-11 cursor-pointer items-center rounded-pill border border-transparent px-4 text-[15px] leading-none font-medium text-soft hover:text-ink aria-pressed:border-line aria-pressed:bg-card aria-pressed:font-bold aria-pressed:text-ink"
+      >
+        {mode === 'light' ? 'Light' : 'Dark'}
+      </button>
+    ))
+  }
+</div>

@@ -1,0 +1,33 @@
+---
+import { NAV } from '../config';
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="wrap">
+  <nav class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5" aria-label="Main">
+    <a class="inline-flex min-h-11 items-center" href="/"><Logo alt="El-Maghrabi, home" /></a>
+
+    <div class="order-3 flex w-full flex-wrap items-center justify-between gap-1 md:order-none md:w-auto md:justify-start">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class="inline-flex min-h-11 items-center rounded-pill px-2.5 text-[15px] text-ink no-underline hover:bg-surface-alt hover:text-ink aria-[current=page]:bg-surface-alt aria-[current=page]:font-bold md:px-4 md:text-base"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="order-2 flex flex-wrap items-center gap-3 md:order-none">
+      <ThemeToggle />
+      <a class="btn btn-primary hidden md:inline-flex" href="/contact/">Get in touch</a>
+    </div>
+  </nav>
+</header>

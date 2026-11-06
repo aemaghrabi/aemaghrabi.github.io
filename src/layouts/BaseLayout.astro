@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE.description } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.title}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap"
+    />
+
+    <!-- Apply the saved colour mode before first paint. Light is the default. -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Light / Dark switch: keeps every toggle on the page in sync and remembers the choice. -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        function sync() {
+          var dark = root.classList.contains('dark');
+          document.querySelectorAll('[data-theme-set]').forEach(function (btn) {
+            var on = (btn.getAttribute('data-theme-set') === 'dark') === dark;
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+        }
+        document.querySelectorAll('[data-theme-set]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var dark = btn.getAttribute('data-theme-set') === 'dark';
+            root.classList.toggle('dark', dark);
+            try {
+              localStorage.setItem('theme', dark ? 'dark' : 'light');
+            } catch (e) {}
+            sync();
+          });
+        });
+        sync();
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Pills from '../components/Pills.astro';
+import { clients, type ClientKey } from '../data/clients';
+import { clientName } from '../lib/clientName';
+
+const featured: ClientKey[] = ['findfill', 'nfta', 'iotech', 'search'];
+const freelance = clients.freelance;
+---
+
+<BaseLayout title="Clients" description="The businesses behind the work, what each needed and what I delivered.">
+  <PageHeader
+    eyebrow="Clients"
+    title="The businesses behind the work"
+    lead="Every client came with a business problem first and a technical one second. Here’s what each needed and what I delivered."
+  />
+
+  <section class="section pt-0 md:pt-0">
+    <div class="wrap">
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          featured.map((key) => {
+            const c = clients[key];
+            const name = clientName(key);
+            return (
+              <article class="card gap-4 md:p-8">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <h2 class="h3 text-2xl">{name}</h2>
+                  <span class="font-mono text-[13px] text-soft">{c.dates}</span>
+                </div>
+                <p class="m-0 text-soft">
+                  {name !== c.description ? `${c.description} · ` : ''}
+                  {c.role}
+                </p>
+                <div class="flex flex-col gap-2 border-y border-line py-4">
+                  <span class="kicker text-amber">The need</span>
+                  <p class="m-0">{c.need}</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <span class="kicker text-accent">What I delivered</span>
+                  <ul class="dot-list">
+                    {c.delivered.slice(0, 4).map((d) => <li>{d}</li>)}
+                  </ul>
+                </div>
+                <Pills items={c.facts} />
+              </article>
+            );
+          })
+        }
+      </div>
+
+      <div class="card mt-6 flex-row flex-wrap items-center justify-between gap-3">
+        <span><strong>{freelance.name}</strong> <span class="text-soft">· {freelance.role}</span></span>
+        <span class="font-mono text-sm text-soft">{freelance.dates}</span>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Could your business be the next one here?"
+    text="Tell me what’s slowing your team down and I’ll tell you what I’d build."
+    button="Start a conversation"
+  />
+</BaseLayout>

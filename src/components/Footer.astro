@@ -1,0 +1,26 @@
+---
+import { NAV, SITE } from '../config';
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="wrap">
+  <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-line py-10 text-[15px] text-soft">
+    <a href="/" class="inline-flex"><Logo class="h-20" alt="El-Maghrabi, home" /></a>
+    <div class="flex flex-wrap items-center gap-1">
+      {
+        NAV.map((item) => (
+          <a href={item.href} class="inline-flex min-h-11 items-center rounded-pill px-3 text-soft no-underline hover:bg-surface-alt hover:text-ink">
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-5">
+      <ThemeToggle />
+      <span>© {year} {SITE.copyright} · {SITE.location}</span>
+    </div>
+  </div>
+</footer>

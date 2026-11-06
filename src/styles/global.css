@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+/* Dark mode follows the `dark` class on <html>, set by the theme toggle. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Personal Design System tokens.
+ * Semantic colours switch with the theme; Tailwind utilities read them
+ * through @theme inline, so `bg-surface`, `text-soft` etc. work in both modes.
+ */
+:root {
+  --surface: #f6f4ee;
+  --surface-alt: #eae6da;
+  --surface-card: #fbfaf6;
+  --border: #ddd8c8;
+  --text: #0f1b2d;
+  --text-soft: #4a5568;
+  --accent: #0b6e78;
+  --accent-amber: #8f5300;
+  --accent-navy: #233a6b;
+  --btn-bg: #0b6e78;
+  --btn-fg: #f6f4ee;
+  --api-bg: #0f1b2d;
+  --api-line: #2b3d5a;
+  --api-dim: #b7c3d4;
+  color-scheme: light;
+}
+
+.dark {
+  --surface: #0f1b2d;
+  --surface-alt: #1b2b45;
+  --surface-card: #1b2b45;
+  --border: #2b3d5a;
+  --text: #f6f4ee;
+  --text-soft: #b7c3d4;
+  --accent: #5cc8cf;
+  --accent-amber: #f2b14b;
+  --accent-navy: #8fa8e8;
+  --btn-bg: #5cc8cf;
+  --btn-fg: #0f1b2d;
+  --api-bg: #233a6b;
+  --api-line: rgba(246, 244, 238, 0.25);
+  --api-dim: #d6eef0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-card: var(--surface-card);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-soft: var(--text-soft);
+  --color-accent: var(--accent);
+  --color-amber: var(--accent-amber);
+  --color-navy: var(--accent-navy);
+  --color-btn: var(--btn-bg);
+  --color-on-btn: var(--btn-fg);
+  --color-api: var(--api-bg);
+  --color-api-line: var(--api-line);
+  --color-api-dim: var(--api-dim);
+}
+
+@theme {
+  /* Fixed brand colours (same in both modes) */
+  --color-paper: #f6f4ee;
+  --color-night: #0f1b2d;
+  --color-brand-navy: #233a6b;
+  --color-teal-deep: #0b6e78;
+  --color-teal-bright: #5cc8cf;
+  --color-teal-mist: #d6eef0;
+  --color-amber-bright: #f2b14b;
+
+  --font-sans: 'DM Sans', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --radius-card: 16px;
+  --radius-pill: 40px;
+}
+
+@layer base {
+  html {
+    background: var(--surface);
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+  a {
+    color: var(--accent);
+  }
+  a:hover {
+    color: var(--text);
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[1200px] px-5 md:px-10;
+  }
+  .section {
+    @apply py-14 md:py-24;
+  }
+  .eyebrow {
+    @apply m-0 font-mono text-sm font-medium tracking-[2px] text-accent uppercase;
+  }
+  .h1 {
+    @apply m-0 text-4xl leading-[1.1] font-bold tracking-[-0.5px] md:text-[56px];
+  }
+  .h2 {
+    @apply m-0 text-[28px] leading-[1.15] font-bold tracking-[-0.3px] md:text-[40px];
+  }
+  .h3 {
+    @apply m-0 text-[22px] leading-[1.25] font-bold;
+  }
+  .lead {
+    @apply m-0 max-w-[720px] text-lg text-soft md:text-xl;
+  }
+  .card {
+    @apply flex min-w-0 flex-col gap-3 rounded-card border border-line bg-card p-[22px] md:p-7;
+  }
+  .pill {
+    @apply inline-block rounded-pill bg-surface-alt px-3.5 py-1.5 text-sm leading-[1.4] text-ink;
+  }
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-pill px-6 text-base leading-[1.2] font-bold no-underline;
+  }
+  .btn-primary {
+    @apply bg-btn text-on-btn hover:text-on-btn hover:opacity-90;
+  }
+  .btn-secondary {
+    @apply border border-line bg-card text-ink hover:border-accent hover:text-ink;
+  }
+  .btn-paper {
+    @apply bg-paper text-night hover:text-night hover:opacity-90;
+  }
+  .kicker {
+    @apply font-mono text-[13px] tracking-[1.5px] uppercase;
+  }
+  .dot-list {
+    @apply m-0 flex list-none flex-col gap-2.5 p-0;
+  }
+  .dot-list li {
+    @apply flex gap-3 text-soft;
+  }
+  .dot-list li::before {
+    content: '';
+    @apply mt-[9px] size-2 flex-none rounded-full border-2 border-accent;
+  }
+}
