@@ -22,7 +22,7 @@ export const CONTACT = {
   linkedin: 'https://www.linkedin.com/in/a-elmaghrabi/',
   github: 'https://github.com/aemaghrabi',
   /** Placeholder until the business number is ready. Set to a string like '+20 ...' to publish it. */
-  phone: null as string | null,
+  phone: '+201019931705',
 };
 
 export const NAV = [

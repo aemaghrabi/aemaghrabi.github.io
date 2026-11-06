@@ -40,10 +40,6 @@ Set `SHOW_CLIENT_NAMES` in `src/config.ts`:
 
 Clients with `alwaysGeneric: true` in `src/data/clients.ts` (the business search engine startup) are always shown by their description.
 
-## Phone number
-
-`CONTACT.phone` in `src/config.ts` is `null`, so the Contact page shows a `[BUSINESS PHONE / WHATSAPP]` placeholder. Set it to the number to publish it.
-
 ## Light and dark mode
 
 The site opens in light mode. The Light / Dark switch in the header and footer adds or removes the `dark` class on `<html>` and remembers the choice in `localStorage`. This small inline script in `src/layouts/BaseLayout.astro` is the only client-side JavaScript; everything else is static HTML and CSS.
