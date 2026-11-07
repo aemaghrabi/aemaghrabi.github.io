@@ -10,11 +10,11 @@ const featured: ClientKey[] = ['findfill', 'nfta', 'iotech', 'search'];
 const freelance = clients.freelance;
 ---
 
-<BaseLayout title="Clients" description="The businesses behind the work, what each needed and what I delivered.">
+<BaseLayout title="Clients" description="The businesses behind the work, what each needed and what we delivered.">
   <PageHeader
     eyebrow="Clients"
     title="The businesses behind the work"
-    lead="Every client came with a business problem first and a technical one second. Here’s what each needed and what I delivered."
+    lead="Every client came with a business problem first and a technical one second. Here’s what each needed and what we delivered."
   />
 
   <section class="section pt-0 md:pt-0">
@@ -39,7 +39,7 @@ const freelance = clients.freelance;
                   <p class="m-0">{c.need}</p>
                 </div>
                 <div class="flex flex-col gap-2">
-                  <span class="kicker text-accent">What I delivered</span>
+                  <span class="kicker text-accent">What we delivered</span>
                   <ul class="dot-list">
                     {c.delivered.slice(0, 4).map((d) => <li>{d}</li>)}
                   </ul>
