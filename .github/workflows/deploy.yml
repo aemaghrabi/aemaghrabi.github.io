@@ -33,6 +33,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Gallery style: slideshows (default), lightbox or off. Set the GALLERY_STYLE repository variable to change it.
+          GALLERY_STYLE: ${{ vars.GALLERY_STYLE }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,0 +1,90 @@
+---
+// Gallery option C: a row per project, each with its own slideshow.
+// Without JavaScript the first screenshot of each project shows.
+import { gallery } from '../data/gallery';
+import { clientName } from '../lib/clientName';
+import Pills from './Pills.astro';
+
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<div class="flex flex-col gap-14">
+  {
+    gallery.map((p, k) => (
+      <div
+        class:list={[
+          'grid items-center gap-10',
+          k % 2 === 0 ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]' : 'lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]',
+        ]}
+        data-slideshow
+      >
+        <div class:list={['flex flex-col gap-3.5', k % 2 === 1 && 'lg:order-2']}>
+          <span class="font-mono text-sm text-soft">
+            {pad(k + 1)} · {clientName(p.client)}
+          </span>
+          <h3 class="h3 text-[28px]">{p.title}</h3>
+          <p class="m-0 text-soft">{p.description}</p>
+          <Pills items={p.tags} />
+          <div class="mt-2 flex items-center gap-3">
+            <button type="button" class="gallery-btn" data-prev aria-label={`Previous ${p.title} screenshot`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5" /><path d="M11 6l-6 6 6 6" /></svg>
+            </button>
+            <button type="button" class="gallery-btn" data-next aria-label={`Next ${p.title} screenshot`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
+            </button>
+            <span class="font-mono text-sm text-soft" data-count aria-live="polite">01 / {pad(p.images.length)}</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            {p.images.map((im, j) => (
+              <button
+                type="button"
+                class="size-3 cursor-pointer rounded-full border-2 border-accent bg-transparent p-0 aria-pressed:bg-accent"
+                data-dot={j}
+                aria-pressed={j === 0 ? 'true' : 'false'}
+                aria-label={im.caption}
+              />
+            ))}
+          </div>
+        </div>
+        <figure class:list={['m-0 flex flex-col gap-2.5', k % 2 === 1 && 'lg:order-1']}>
+          <div class="overflow-hidden rounded-card border border-line bg-night">
+            {p.images.map((im, j) => (
+              <img
+                class:list={['block h-auto w-full', j !== 0 && 'hidden']}
+                src={im.src}
+                alt={im.caption}
+                width={im.width}
+                height={im.height}
+                loading={k === 0 && j === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                data-slide={j}
+              />
+            ))}
+          </div>
+          <figcaption class="text-[15px] text-soft" data-caption>{p.images[0].caption}</figcaption>
+        </figure>
+      </div>
+    ))
+  }
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-slideshow]').forEach(function (root) {
+    var slides = root.querySelectorAll('[data-slide]');
+    var dots = root.querySelectorAll('[data-dot]');
+    var count = root.querySelector('[data-count]');
+    var caption = root.querySelector('[data-caption]');
+    var n = slides.length, i = 0;
+    var pad = function (x) { return String(x).padStart(2, '0'); };
+    function show(k) {
+      i = (k + n) % n;
+      slides.forEach(function (s, j) { s.classList.toggle('hidden', j !== i); });
+      dots.forEach(function (d, j) { d.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+      count.textContent = pad(i + 1) + ' / ' + pad(n);
+      caption.textContent = slides[i].getAttribute('alt');
+    }
+    root.querySelector('[data-prev]').addEventListener('click', function () { show(i - 1); });
+    root.querySelector('[data-next]').addEventListener('click', function () { show(i + 1); });
+    dots.forEach(function (d) { d.addEventListener('click', function () { show(+d.getAttribute('data-dot')); }); });
+  });
+</script>

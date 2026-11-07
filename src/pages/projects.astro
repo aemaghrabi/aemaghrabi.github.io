@@ -4,6 +4,8 @@ import CaseRow from '../components/CaseRow.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import { GALLERY_STYLE } from '../config';
 import { projects } from '../data/projects';
 
 const groups = [
@@ -13,6 +15,7 @@ const groups = [
 ];
 
 // Case numbers run on across the groups (01, 02, ...).
+const hasGallery = GALLERY_STYLE !== 'off';
 let counter = 0;
 const numbered = groups.map((g) => ({
   ...g,
@@ -28,6 +31,16 @@ const numbered = groups.map((g) => ({
   >
     <nav class="flex flex-wrap gap-2" aria-label="Case study groups">
       {
+        hasGallery && (
+          <a
+            href="#gallery"
+            class="inline-flex min-h-11 items-center rounded-pill border border-line bg-card px-[18px] text-[15px] text-ink no-underline hover:border-accent hover:text-ink"
+          >
+            Project gallery
+          </a>
+        )
+      }
+      {
         groups.map((g) => (
           <a
             href={`#${g.id}`}
@@ -40,9 +53,11 @@ const numbered = groups.map((g) => ({
     </nav>
   </PageHeader>
 
+  <ProjectGallery />
+
   {
     numbered.map((g, i) => (
-      <section id={g.id} class:list={['section scroll-mt-6', i % 2 === 0 && 'bg-surface-alt']}>
+      <section id={g.id} class:list={['section scroll-mt-6', i % 2 === (hasGallery ? 1 : 0) && 'bg-surface-alt']}>
         <div class="wrap">
           <SectionHead eyebrow={g.eyebrow} title={g.title} />
           <div class="flex flex-col gap-6">
