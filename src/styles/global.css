@@ -124,6 +124,10 @@
   .dark .bg-surface-alt .card {
     background-color: var(--surface);
   }
+  /* Pills inside surface-alt sections sit on the page tone so they stay visible. */
+  .bg-surface-alt .pill {
+    background-color: var(--surface);
+  }
   .pill {
     @apply inline-block rounded-pill bg-surface-alt dark:bg-line px-3.5 py-1.5 text-sm leading-[1.4] text-ink;
   }
@@ -138,6 +142,12 @@
   }
   .btn-paper {
     @apply bg-paper text-night hover:text-night hover:opacity-90;
+  }
+  .gallery-btn {
+    @apply inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-card text-ink hover:border-accent;
+  }
+  .lightbox-btn {
+    @apply inline-flex size-12 flex-none cursor-pointer items-center justify-center rounded-full border border-paper/40 bg-transparent text-paper hover:border-paper;
   }
   .kicker {
     @apply font-mono text-[13px] tracking-[1.5px] uppercase;

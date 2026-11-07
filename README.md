@@ -40,6 +40,24 @@ Set `SHOW_CLIENT_NAMES` in `src/config.ts`:
 
 Clients with `alwaysGeneric: true` in `src/data/clients.ts` (the business search engine startup) are always shown by their description.
 
+## Project gallery
+
+The Projects page shows a screenshot gallery for Intellija, FindFill and SharpStat (images in `public/images/gallery/`, content in `src/data/gallery.ts`). Pick the style with the `GALLERY_STYLE` build variable:
+
+| Value | Result |
+| --- | --- |
+| `slideshows` (default) | A row per project, each with its own slideshow, arrows and dots |
+| `lightbox` | A cover card per project; opening one shows its screens full size |
+| `off` | No gallery |
+
+```sh
+npm run build                          # slideshows
+GALLERY_STYLE=lightbox npm run build   # cover cards + lightbox
+GALLERY_STYLE=off npm run build        # no gallery
+```
+
+You can also put `GALLERY_STYLE=lightbox` in a `.env` file, or set it as a repository variable for the deploy workflow. Each style needs a few lines of inline JavaScript for its arrows and dialog. Without JavaScript, the first screenshot of each project still shows.
+
 ## Phone number
 
 `CONTACT.phone` in `src/config.ts` is `null`, so the Contact page shows a `[BUSINESS PHONE / WHATSAPP]` placeholder. Set it to the number to publish it.

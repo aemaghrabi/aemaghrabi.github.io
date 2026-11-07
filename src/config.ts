@@ -8,6 +8,21 @@
  */
 export const SHOW_CLIENT_NAMES = true;
 
+/**
+ * Project screenshot gallery on the Projects page.
+ * 'slideshows': a row per project with its own slideshow (default).
+ * 'lightbox':   a cover card per project that opens its screens full size.
+ * 'off':        no gallery.
+ * Override at build time without editing code: GALLERY_STYLE=lightbox npm run build
+ */
+export type GalleryStyle = 'slideshows' | 'lightbox' | 'off';
+const envGallery = (import.meta.env.GALLERY_STYLE ??
+  (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env.GALLERY_STYLE) as
+  | string
+  | undefined;
+export const GALLERY_STYLE: GalleryStyle =
+  envGallery === 'lightbox' || envGallery === 'off' || envGallery === 'slideshows' ? envGallery : 'slideshows';
+
 export const SITE = {
   title: 'Ahmed El-Maghrabi',
   description:

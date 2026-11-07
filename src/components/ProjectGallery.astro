@@ -1,0 +1,18 @@
+---
+// Project screenshot gallery section. Style comes from GALLERY_STYLE in src/config.ts.
+import { GALLERY_STYLE } from '../config';
+import GalleryLightbox from './GalleryLightbox.astro';
+import GallerySlideshows from './GallerySlideshows.astro';
+import SectionHead from './SectionHead.astro';
+---
+
+{
+  GALLERY_STYLE !== 'off' && (
+    <section id="gallery" class="section scroll-mt-6 bg-surface-alt">
+      <div class="wrap">
+        <SectionHead eyebrow="Project gallery" title="Inside the products" />
+        {GALLERY_STYLE === 'lightbox' ? <GalleryLightbox /> : <GallerySlideshows />}
+      </div>
+    </section>
+  )
+}
