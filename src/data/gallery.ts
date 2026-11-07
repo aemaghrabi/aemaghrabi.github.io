@@ -6,6 +6,10 @@ export interface GalleryImage {
   caption: string;
   width: number;
   height: number;
+  /** Still image used for thumbnails and cover cards (set for animated GIFs so they only load when viewed). */
+  thumb?: string;
+  /** True for animated GIFs; shown with an "Animated" label. */
+  animated?: boolean;
 }
 
 export interface GalleryProject {
@@ -22,6 +26,12 @@ const img = (file: string, caption: string, width: number, height: number): Gall
   caption,
   width,
   height,
+});
+
+const gif = (file: string, poster: string, caption: string, width: number, height: number): GalleryImage => ({
+  ...img(file, caption, width, height),
+  thumb: `/images/gallery/${poster}`,
+  animated: true,
 });
 
 export const gallery: GalleryProject[] = [
@@ -65,6 +75,7 @@ export const gallery: GalleryProject[] = [
       'A web console that connects to a potentiostat over a serial interface, configures techniques like cyclic voltammetry, plots voltage and current live and exports CSV.',
     tags: ['C#', 'ASP.NET', 'MVC', 'Razor', 'Serial interface', 'JSON'],
     images: [
+      gif('sharpstat-walkthrough.gif', 'sharpstat-walkthrough-poster.jpg', 'Full walkthrough: connect, configure and run a cyclic voltammetry scan', 800, 660),
       img('sharpstat-1-disconnected.jpg', '1. Device disconnected', 1200, 990),
       img('sharpstat-2-connected.jpg', '2. Device connected', 1200, 990),
       img('sharpstat-3-configured.jpg', '3. Technique configured', 1200, 990),

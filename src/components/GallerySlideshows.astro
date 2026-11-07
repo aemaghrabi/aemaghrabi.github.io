@@ -47,19 +47,27 @@ const pad = (n: number) => String(n).padStart(2, '0');
           </div>
         </div>
         <figure class:list={['m-0 flex flex-col gap-2.5', k % 2 === 1 && 'lg:order-1']}>
-          <div class="overflow-hidden rounded-card border border-line bg-night">
+          <div class="relative overflow-hidden rounded-card border border-line bg-night">
             {p.images.map((im, j) => (
               <img
                 class:list={['block h-auto w-full', j !== 0 && 'hidden']}
-                src={im.src}
+                src={im.animated && im.thumb ? im.thumb : im.src}
+                data-gif={im.animated && im.thumb ? im.src : undefined}
                 alt={im.caption}
                 width={im.width}
                 height={im.height}
                 loading={k === 0 && j === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 data-slide={j}
+                data-animated={im.animated ? 'true' : undefined}
               />
             ))}
+            <span
+              class:list={['pointer-events-none absolute top-3 left-3 rounded-pill bg-night/80 px-3 py-1 font-mono text-[13px] tracking-[1px] text-paper uppercase', !p.images[0].animated && 'hidden']}
+              data-animated-badge
+            >
+              Animated
+            </span>
           </div>
           <figcaption class="text-[15px] text-soft" data-caption>{p.images[0].caption}</figcaption>
         </figure>
@@ -69,11 +77,27 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </div>
 
 <script is:inline>
+  // Animated GIFs start as their still poster and swap in only when their row nears the viewport.
+  (function () {
+    var gifs = document.querySelectorAll('[data-slideshow] img[data-gif]');
+    function load(im) { if (im.dataset.gif) { im.src = im.dataset.gif; delete im.dataset.gif; } }
+    if (!('IntersectionObserver' in window)) { gifs.forEach(load); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('img[data-gif]').forEach(load);
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+    gifs.forEach(function (im) { io.observe(im.closest('[data-slideshow]')); });
+  })();
   document.querySelectorAll('[data-slideshow]').forEach(function (root) {
     var slides = root.querySelectorAll('[data-slide]');
     var dots = root.querySelectorAll('[data-dot]');
     var count = root.querySelector('[data-count]');
     var caption = root.querySelector('[data-caption]');
+    var badge = root.querySelector('[data-animated-badge]');
     var n = slides.length, i = 0;
     var pad = function (x) { return String(x).padStart(2, '0'); };
     function show(k) {
@@ -82,6 +106,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
       dots.forEach(function (d, j) { d.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
       count.textContent = pad(i + 1) + ' / ' + pad(n);
       caption.textContent = slides[i].getAttribute('alt');
+      badge.classList.toggle('hidden', !slides[i].hasAttribute('data-animated'));
     }
     root.querySelector('[data-prev]').addEventListener('click', function () { show(i - 1); });
     root.querySelector('[data-next]').addEventListener('click', function () { show(i + 1); });

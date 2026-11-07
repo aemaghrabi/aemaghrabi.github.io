@@ -56,7 +56,7 @@ GALLERY_STYLE=lightbox npm run build   # cover cards + lightbox
 GALLERY_STYLE=off npm run build        # no gallery
 ```
 
-You can also put `GALLERY_STYLE=lightbox` in a `.env` file, or set it as a repository variable for the deploy workflow. Each style needs a few lines of inline JavaScript for its arrows and dialog. Without JavaScript, the first screenshot of each project still shows.
+You can also put `GALLERY_STYLE=lightbox` in a `.env` file, or set it as a repository variable for the deploy workflow. Animated GIFs (the SharpStat walkthrough) are lazy-loaded and use a still poster for thumbnails and cover cards, so the GIF only downloads when its slide is viewed. Each style needs a few lines of inline JavaScript for its arrows and dialog. Without JavaScript, the first screenshot of each project still shows.
 
 ## Light and dark mode
 
