@@ -57,10 +57,10 @@ export const gallery: GalleryProject[] = [
     title: 'FindFill healthcare staffing platform',
     description:
       'Operations dashboard plus facility, clinician and agency portals: job boards, scheduling, timecards, payments and budgeting.',
-    tags: ['C#', '.NET', 'Bubble.io', 'Stripe', 'API integrations', 'Webhooks', 'Azure', 'Azure Functions', 'Azure Data Factory', 'PHP'],
+    tags: ['Bubble.io', 'Stripe', 'API integrations', 'Webhooks', 'Azure', 'Azure Functions', 'Azure Data Factory', 'PHP', 'C#', '.NET'],
     images: [
-      img('findfill-dashboard.jpg', 'Operations dashboard', 1512, 702),
       img('findfill-job-board.jpg', 'Clinician job board', 1512, 702),
+      img('findfill-dashboard.jpg', 'Operations dashboard', 1512, 702),
       img('findfill-schedule.jpg', 'Facility shift schedule', 1512, 702),
       img('findfill-payments.jpg', 'Facility payments', 1512, 702),
       img('findfill-budgeting.jpg', 'Facility budgeting', 1512, 702),
