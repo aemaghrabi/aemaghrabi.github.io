@@ -18,6 +18,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Google Tag Manager -->
+    <script is:inline async src="https://www.googletagmanager.com/gtm.js?id=GTM-MRN59BK5"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
